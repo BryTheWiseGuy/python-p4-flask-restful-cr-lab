@@ -32,9 +32,9 @@ class Plants(Resource):
     def post(self):
         
         new_plant = Plant(
-            name=request.form['name'],
-            image=request.form['image'],
-            price=request.form['price'],
+            name=request.get_json().get('name'),
+            image=request.get_json().get('image'),
+            price=request.get_json().get('price'),
         )
         
         db.session.add(new_plant)
@@ -43,7 +43,7 @@ class Plants(Resource):
         plant_dict = new_plant.to_dict()
         
         response = make_response(
-            jsonify(plant_dict),
+            plant_dict,
             201
         )
         
